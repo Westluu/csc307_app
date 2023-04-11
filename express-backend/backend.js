@@ -82,7 +82,16 @@ function addUser(user) {
     users['users_list'].push(user);
 }
 
+app.delete('/users', (req, res) => {
+    const userToDelete = req.body;
+    deleteUser(userToDelete)
+    res.status(200).end();
+});
 
+function deleteUser(id) {
+    let deleteUser = findUserById(id);
+    delete deleteUser;
+}
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
