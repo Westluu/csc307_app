@@ -74,6 +74,22 @@ function findUserById(id) {
     //return users['users_list'].filter( (user) => user['id'] === id);
 }
 
+app.get('/users/:name/:job', (req, res) => {
+    const name = req.params['name'];
+    const job = req.params['job'];
+    let result = findNameJob(name, job);
+    if (result == undefined || result.length == 0)
+        res.status(404).send('Resource not found.');
+    else {
+        result = {users_list: result};
+        res.send(result);
+    }
+});
+
+function findNameJob(name, job) {
+    return users['users_list'].find( (user) => user['name'] === name && user['job'] == job); // or line below
+}
+
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
     addUser(userToAdd);
