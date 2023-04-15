@@ -104,14 +104,20 @@ function addUser(user) {
 
 app.delete('/users', (req, res) => {
     const userToDelete = req.body;
-    deleteUser(userToDelete)
-    res.status(200).end();
+    let deleteUserIdx = getIdx(userToDelete['id']);
+    const remove = users.users_list.splice(deleteUserIdx, deleteUserIdx);
+    if (remove > 0) {
+        res.status(204).end();
+    }
+    else {
+        res.status(404).end();
+    }
 });
 
-function deleteUser(id) {
-    let deleteUser = findUserById(id);
-    delete deleteUser;
+function getIdx(id) {
+    return users['users_list'].findIndex( (user) => user['id'] === id);
 }
+
 
 function uniqueid(){
     // always start with a letter (for DOM friendlyness)
