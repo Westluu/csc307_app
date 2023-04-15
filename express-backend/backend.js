@@ -34,7 +34,7 @@ const users = {
     ]
  }
 
- app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -93,7 +93,7 @@ function findNameJob(name, job) {
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
     addUser(userToAdd);
-    res.status(200).end();
+    res.status(201).end();
 });
 
 function addUser(user) {
