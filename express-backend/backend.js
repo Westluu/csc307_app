@@ -98,15 +98,17 @@ app.post('/users', (req, res) => {
 
 function addUser(user) {
     user['id'] = uniqueid();
-    console.log(user);
     users['users_list'].push(user);
 }
 
-app.delete('/users', (req, res) => {
-    const userToDelete = req.body;
-    let deleteUserIdx = getIdx(userToDelete['id']);
+app.delete('/users/:id', (req, res) => {
+    const id = req.params['id'];
+    let deleteUserIdx = getIdx(id);
+    console.log(id);
+    console.log(deleteUserIdx);
     const remove = users.users_list.splice(deleteUserIdx, deleteUserIdx);
-    if (remove > 0) {
+    console.log(remove);
+    if (remove != []) {
         res.status(204).end();
     }
     else {
