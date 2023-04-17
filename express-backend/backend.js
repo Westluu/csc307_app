@@ -93,6 +93,7 @@ function findNameJob(name, job) {
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
     addUser(userToAdd);
+    res.send(userToAdd);
     res.status(201).end();
 });
 
