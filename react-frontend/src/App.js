@@ -5,12 +5,16 @@ import axios from 'axios';
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
-    
-    function removeOneCharacter (index) {
-      const updated = characters.filter((character, i) => {
+
+  function removeOneCharacter(index) {
+      makeDeleteCall(characters[index]['id']).then( result => {
+      if (result && result.status === 204) {
+        const updated = characters.filter((character, i) => {
         return i !== index
+        });
+        setCharacters(updated);
+      }
       });
-      setCharacters(updated);
     }
 
     function updateList(person) {
@@ -18,10 +22,6 @@ function MyApp() {
       if (result && result.status === 201)
           setCharacters([...characters, person] );
       });
-    }
-
-    function removeUser(person) {
-
     }
 
     async function fetchAll(){
@@ -38,7 +38,7 @@ function MyApp() {
 
     async function makePostCall(person){
       try {
-        const response = await axios.post('http://localhost:8000/users', person);
+        const response = await axios.post('http://localhost:8000/users/', person);
         return response;
       } 
       catch (error) {
@@ -47,9 +47,9 @@ function MyApp() {
       }
     }
 
-    async function makeDeleteCall(person){
+    async function makeDeleteCall(id){
       try {
-        const response = await axios.delete('http://localhost:8000/users', person);
+        const response = await axios.delete('http://localhost:8000/users/' + id);
         return response;
       } 
       catch (error) {
